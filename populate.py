@@ -10,7 +10,7 @@ from sqlalchemy.orm import sessionmaker
 
 URL_KDNUGGETS = 'https://www.kdnuggets.com'
 URL_MEDIUM = 'https://towardsdatascience.com'
-METADATA_PATH = '/home/david/Nextcloud/repos/products/datatau.net-populator/articles.db'
+METADATA_PATH = 'articles.db'
 DATATAU_API_URL = 'https://datatau.net/api/post'
 DATATAU_API_KEY = '7h-o33hDiZ8b90p_pGt9'
 
@@ -90,10 +90,10 @@ if __name__ == '__main__':
 
     for article in articles:
 
-        published = session.query(Article).filter_by(url=article.url).scalar() is not None
+        published = session.query(Article).filter_by(url=article.url).scalar()
 
         if not published:
-            logger.info("article is not in DataTau!, posting...")
+            logger.info(f"article '{article.title}' is not in DataTau!, posting...")
             r = requests.post(DATATAU_API_URL,
                               json={'api_key': DATATAU_API_KEY,
                                     'title': article.title,
@@ -111,7 +111,7 @@ if __name__ == '__main__':
             break
 
         else:
-            logger.info("article already published... moving to the next one!")
+            logger.info(f"article '{article.title}' already published... moving to the next one!")
             continue
 
     session.close_all()

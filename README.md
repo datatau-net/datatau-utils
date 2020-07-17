@@ -1,4 +1,4 @@
-# datatau.net populator
+# datatau.net utils
 
 This script aims to get quality and data science related posts from a variety of webs:
 
